@@ -86,9 +86,8 @@ public class MainController {
 	public String createTask(@Valid @ModelAttribute("task") Task  task, BindingResult result, @RequestParam("assignees") Long assigneeID, Model model, HttpSession session) {
 		User user = userService.findUserById((Long)session.getAttribute("userId"));
 		User assignee = userService.findUserById(assigneeID);
-		System.out.println(assignee);
-
 		if(result.hasErrors()) {
+			model.addAttribute("assignees", userService.allUsers());
 			return "add.jsp";
 		}else
 			task.setCreator(user);
@@ -117,13 +116,14 @@ public class MainController {
 		return "edit.jsp";
 	}
 	@RequestMapping(value="/taskEditUpate/{id}", method=RequestMethod.PUT)
-    public String update(@Valid @ModelAttribute("Task") Task task, BindingResult result, @RequestParam("assignees") Long assigneeId,@PathVariable("id") Long id, HttpSession session) {
-
+    public String update(@Valid @ModelAttribute("task") Task task, BindingResult result, @RequestParam("assignees") Long assigneeId, @PathVariable("id") Long id, HttpSession session, Model model) {
 		User user = userService.findUserById((Long)session.getAttribute("userId"));
 		User assignee = userService.findUserById(assigneeId);
         if (result.hasErrors()) {
-            return "edit.jsp";
+        	model.addAttribute("assignees", userService.allUsers());
+        	return "edit.jsp";
         } else {
+        	
         	task.setCreator(user);
             taskService.update(task);
             return "redirect:/dashboard";
@@ -135,7 +135,8 @@ public class MainController {
 			User assignee = userService.findUserById(id);
 			
 			model.addAttribute("task", task);
-			model.addAttribute("assignee", assignee);
+			model.addAttribute("assignees", userService.allUsers());
+			//model.addAttribute("assignee", assignee);
 			
 			
 			return "show.jsp";

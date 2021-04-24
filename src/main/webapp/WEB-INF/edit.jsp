@@ -1,7 +1,9 @@
+<%@ page isErrorPage="true" %> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page isErrorPage="true" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +15,19 @@
 <title>Edit</title>
 </head>
 <body>
-
+<p>
+<form:errors path="task.*" />
+</p>
 <div class="container center mt-5">
 		<div class="row">
 			<div class="col border border-primary">
-<p><form:errors path="task.*"/></p>
+			
+
     <h1>Edit Task</h1>
-    <form:form class="form-group push" method="PUT" action="/taskEditUpate/${task.id}" modelAttribute="task">
+    <p><form:errors path="task.*"/></p>
+    <form:form class="form-group push" method="post" action="/taskEditUpate/${task.id}" modelAttribute="task">
+     <input type="hidden" name="_method" value="put">
+  
         <p>
 			<form:label path="name">Name:</form:label>
 			<form:input type="name" path="name" />

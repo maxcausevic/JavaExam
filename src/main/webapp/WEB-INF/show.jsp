@@ -22,8 +22,9 @@
 				</h3>
 				<ul class="m-5 text-info">
 					<li>Creator: <c:out value="${task.creator.firstName}" /></li>
-					
+					<c:forEach items="${task.assignees}" var="assignee">
 					<li>Assignee: <c:out value="${assignee.firstName}" /></li>
+					</c:forEach>
 					<li>Priority: <c:out value="${task.priority}" /></li>
 				</ul>
 			</div>
